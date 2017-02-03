@@ -197,7 +197,7 @@ public class MyFakebookOracle extends FakebookOracle {
             //get longest and shortest firstname
 
             ResultSet rst=stmt.executeQuery("select U.user_id, U.first_name, U.last_name from "+userTableName+" U, "+currentCityTableName+
-                " C, "+hometownCityTableName+" H, "+" where U.user_id=C.user_id and U.user_id=H.user_id and C.current_city_id <> H.hometown_city_id");
+                " C, "+hometownCityTableName+" H "+" where U.user_id=C.user_id and U.user_id=H.user_id and C.current_city_id <> H.hometown_city_id");
 
             
             while(rst.next()){
