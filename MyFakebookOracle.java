@@ -205,7 +205,6 @@ public class MyFakebookOracle extends FakebookOracle {
                 String firstName=rst.getString(2);
                 String lastName=rst.getString(3); 
                 System.out.println("user_id: "+userId+" first_name: "+firstName+" last_name: "+lastName);
-                this.liveAwayFromHome.add(new UserInfo(userId, firstName, lastName));
             }
             rst.close();
             stmt.close();
