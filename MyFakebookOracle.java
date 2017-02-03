@@ -138,8 +138,8 @@ public class MyFakebookOracle extends FakebookOracle {
             int longest = 0;
             int shortest=0;
             while(rst.next()){
-                if (rst.isFirst())  shortest=rst.getInt(2);
-                if (rst.isLast())   longest=rst.getInt(2);
+                if (rst.isFirst())  {shortest=rst.getInt(2);System.out.println("shortest: "+shortest);}
+                if (rst.isLast())   {longest=rst.getInt(2);System.out.println("longest: "+longest);}
             }
 
 
@@ -147,8 +147,8 @@ public class MyFakebookOracle extends FakebookOracle {
                 " where LEN(first_name)="+shortest+" or LEN(first_name) ="+longest+" order by LEN(first_name)");
             while(rst.next()){
                 String temp=rst.getString(1);
-                if(rst.getInt(2)==shortest) this.shortestFirstNames.add(new String(temp));
-                else    this.longestFirstNames.add(new String(temp));
+                if(rst.getInt(2)==shortest) {this.shortestFirstNames.add(new String(temp));System.out.println("shortestName: "+temp);}
+                else    {this.longestFirstNames.add(new String(temp));System.out.println("longestName: "+temp);}
             }
 
             //get most common first name
@@ -159,8 +159,9 @@ public class MyFakebookOracle extends FakebookOracle {
                 if(rst.isFirst()){
                     count=rst.getInt(2);
                     this.mostCommonFirstNamesCount=count;
+                    System.out.println("count: "+count);
                 }
-                if(rst.getInt(2)==count)    this.mostCommonFirstNames.add(new String(rst.getString(1)));
+                if(rst.getInt(2)==count)    {this.mostCommonFirstNames.add(new String(rst.getString(1)));System.out.println("common: "+rst.getString(1));}
                 else    break;
             }
             rst.close();
