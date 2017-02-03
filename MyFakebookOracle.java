@@ -138,8 +138,8 @@ public class MyFakebookOracle extends FakebookOracle {
             int longest = 0;
             int shortest=0;
             while(rst.next()){
-                if (rst.isFirst())  {shortest=rst.getInt(2);System.out.println("shortest: "+shortest);}
-                if (rst.isLast())   {longest=rst.getInt(2);System.out.println("longest: "+longest);}
+                if (rst.isFirst())  shortest=rst.getInt(2);
+                if (rst.isLast())   longest=rst.getInt(2);
             }
 
 
@@ -147,8 +147,8 @@ public class MyFakebookOracle extends FakebookOracle {
                 " where LENGTH(first_name)="+shortest+" or LENGTH(first_name) ="+longest+" order by LENGTH(first_name)");
             while(rst.next()){
                 String temp=rst.getString(1);
-                if(rst.getInt(2)==shortest) {this.shortestFirstNames.add(new String(temp));System.out.println("shortestName: "+temp);}
-                else    {this.longestFirstNames.add(new String(temp));System.out.println("longestName: "+temp);}
+                if(rst.getInt(2)==shortest) this.shortestFirstNames.add(new String(temp));
+                else    this.longestFirstNames.add(new String(temp));
             }
 
             //get most common first name
@@ -159,9 +159,8 @@ public class MyFakebookOracle extends FakebookOracle {
                 if(rst.isFirst()){
                     count=rst.getInt(2);
                     this.mostCommonFirstNamesCount=count;
-                    System.out.println("count: "+count);
                 }
-                if(rst.getInt(2)==count)    {this.mostCommonFirstNames.add(new String(rst.getString(1)));System.out.println("common: "+rst.getString(1));}
+                if(rst.getInt(2)==count)    this.mostCommonFirstNames.add(new String(rst.getString(1)));
                 else    break;
             }
             rst.close();
@@ -205,6 +204,7 @@ public class MyFakebookOracle extends FakebookOracle {
                 Long userId=rst.getLong(1);
                 String firstName=rst.getString(2);
                 String lastName=rst.getString(3); 
+                System.out.println("user_id: "+userId+" first_name: "+firstName+" last_name: "+lastName);
                 this.liveAwayFromHome.add(new UserInfo(userId, firstName, lastName));
             }
             rst.close();
