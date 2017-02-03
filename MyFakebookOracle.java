@@ -147,8 +147,8 @@ public class MyFakebookOracle extends FakebookOracle {
                 " where LEN(first_name)="+shortest+" or LEN(first_name) ="+longest+" order by LEN(first_name)");
             while(rst.next()){
                 String temp=rst.getString(1);
-                if(rst.getInt(2)==shortest) this.shortestFirstNames.add(temp);
-                else    this.longestFirstNames.add(temp);
+                if(rst.getInt(2)==shortest) this.shortestFirstNames.add(new String(temp));
+                else    this.longestFirstNames.add(new String(temp));
             }
 
             //get most common first name
@@ -160,10 +160,11 @@ public class MyFakebookOracle extends FakebookOracle {
                     count=rst.getInt(2);
                     this.mostCommonFirstNamesCount=count;
                 }
-                if(rst.getInt(2)==count)    this.mostCommonFirstNames.add(rst.getString(1));
+                if(rst.getInt(2)==count)    this.mostCommonFirstNames.add(new String(rst.getString(1)));
                 else    break;
             }
-
+            rst.close();
+            stmt.close();
         } catch (SQLException err) {
             System.err.println(err.getMessage());
         }
@@ -196,15 +197,17 @@ public class MyFakebookOracle extends FakebookOracle {
             //get longest and shortest firstname
 
             ResultSet rst=stmt.executeQuery("select U.user_id, U.first_name, U.last_name from "+userTableName+" U, "+currentCityTableName+
-                " C, "+hometownCityTableName+" H, "+" where U.user_id=C.user_id and U.user_id=H.user_id and C.current_city_id != H.hometown_city_id");
+                " C, "+hometownCityTableName+" H, "+" where U.user_id=C.user_id and U.user_id=H.user_id and C.current_city_id <> H.hometown_city_id");
 
             
             while(rst.next()){
-                Long userId=new Long(rst.getInt(1));
+                Long userId=rst.getLong(1);
                 String firstName=rst.getString(2);
                 String lastName=rst.getString(3); 
                 this.liveAwayFromHome.add(new UserInfo(userId, firstName, lastName));
             }
+            rst.close();
+            stmt.close();
         } catch (SQLException err) {
             System.err.println(err.getMessage());
         }
