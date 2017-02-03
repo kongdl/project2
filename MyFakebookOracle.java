@@ -132,8 +132,8 @@ public class MyFakebookOracle extends FakebookOracle {
                     ResultSet.CONCUR_READ_ONLY)){
             //get longest and shortest firstname
 
-            ResultSet rst=stmt.executeQuery("select first_name, LEN(first_name) from "+userTableName+
-                " order by LEN(first_name)");
+            ResultSet rst=stmt.executeQuery("select first_name, LENGTH(first_name) from "+userTableName+
+                " order by LENGTH(first_name)");
 
             int longest = 0;
             int shortest=0;
@@ -143,8 +143,8 @@ public class MyFakebookOracle extends FakebookOracle {
             }
 
 
-            rst=stmt.executeQuery("select first_name, LEN(first_name) from "+userTableName+
-                " where LEN(first_name)="+shortest+" or LEN(first_name) ="+longest+" order by LEN(first_name)");
+            rst=stmt.executeQuery("select first_name, LENGTH(first_name) from "+userTableName+
+                " where LENGTH(first_name)="+shortest+" or LENGTH(first_name) ="+longest+" order by LENGTH(first_name)");
             while(rst.next()){
                 String temp=rst.getString(1);
                 if(rst.getInt(2)==shortest) {this.shortestFirstNames.add(new String(temp));System.out.println("shortestName: "+temp);}
